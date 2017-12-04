@@ -1,4 +1,10 @@
+module  Destructable
+  def destroy(anyobject)
+    puts "I will destroy the object"
+  end
+end
 class User
+    include Destructable
     attr_accessor :name, :email
     def initialize(name, email)
       @name = name
@@ -13,27 +19,32 @@ class User
     def set_name=(name)
       @name = name
     end
+    def self.identify_yourself
+      puts "Hey, I am a class method"
+    end
 end
 
-user = User.new("John", "john@example.com")
-user1 = User.new("Jane", "jane@example.com")
-user2 = User.new("James", "james@example.com")
-# puts User.ancestors
+class Buyer < User
+  def run
+    puts "Hey I'm running and I'm in buyer class"
+    
+  end
+end
 
-# user.run
-# user1.run
-# user2.run
-# puts user
-# puts user1
-# puts user2
+class Seller < User
+end
 
-# puts user.get_name
-puts user.name
-# user.set_name = "Eric"
-user.name = "Eric"
-puts user.name
+class Admin < User
+end
 
-puts "My user name is #{user.name} and my email #{user.email}"
-user.name = "Jacob"
-user.email = "jacob@example.com"
-puts "My user name is #{user.name} and my email #{user.email}"
+buyer = Buyer.new("John Doe", "johndoe@example.com")
+buyer.run
+seller = Seller.new("Jane Doe", "janedoe@example.com")
+seller.run
+admin = Admin.new("Jerome Doe", "jeromedoe@example.com")
+admin.run
+puts Buyer.ancestors
+User.identify_yourself
+
+user = User.new("Jim", "jim@example.com")
+user.destroy(user)
